@@ -1,0 +1,2 @@
+django>=6.0.1
+environs>=14.5.0
