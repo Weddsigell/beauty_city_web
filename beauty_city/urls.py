@@ -20,5 +20,10 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', render, kwargs={'template_name': 'index.html'}, name='start_page')
+    path('', render, kwargs={'template_name': 'index.html'}, name='index_page'),
+    path('admin2/', render, kwargs={'template_name': 'admin.html'}, name='admin_page'),
+    path('notes/', render, kwargs={'template_name': 'notes.html'}, name='notes_page'),
+    path('popup/', render, kwargs={'template_name': 'popup.html'}, name='popup_page'),
+    path('service/', render, kwargs={'template_name': 'service.html'}, name='service_page'),
+    path('service_finally/', render, kwargs={'template_name': 'serviceFinally.html'}, name='service_finally_page'),
 ]
