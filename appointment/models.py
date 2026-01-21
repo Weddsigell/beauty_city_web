@@ -2,17 +2,29 @@ from django.db import models
 
 
 class Appointment(models.Model):
-    client = models.ForeignKey("client.Client", on_delete=models.CASCADE)
+    client = models.ForeignKey(
+        "client.Client", on_delete=models.CASCADE, verbose_name="Клиент"
+    )
     master = models.ForeignKey(
-        "master.Master", on_delete=models.SET_NULL, null=True, blank=True
+        "master.Master",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Мастер",
     )
     service = models.ForeignKey(
-        "service.Service", on_delete=models.SET_NULL, null=True, blank=True
+        "service.Service",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Услуга",
     )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
-    time = models.TimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    date = models.DateField(verbose_name="Дата записи")
+    time = models.TimeField(verbose_name="Время записи")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата создания записи"
+    )
 
     class Meta:
         verbose_name = "Запись"
