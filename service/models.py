@@ -8,7 +8,12 @@ class Service(models.Model):
         ('nail_service', 'Ногтевой сервис'),
         ('makeup', 'Макияж')
     ]
-
+    
+    group_services = models.CharField(
+        choices=SERVICES,
+        max_length=100,
+        verbose_name='Группа услуг',
+    )
     name = models.CharField(max_length=100, verbose_name='Услуга')
     price = models.DecimalField(
         max_digits=10,
