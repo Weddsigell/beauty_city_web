@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'master',
     'service',
     'schedule',
-    'appointment',
+    'note',
 ]
 
 MIDDLEWARE = [

@@ -30,7 +30,7 @@ urlpatterns = [
     path('service_finally/', render, kwargs={'template_name': 'serviceFinally.html'}, name='service_finally_page'),
     path('', include('salon.urls')),
     path('', include('client.urls')),
-    path('', include('appointment.urls')),
+    path('', include('note.urls')),
 ]
 
 if settings.DEBUG:

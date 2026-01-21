@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Appointment(models.Model):
+class Note(models.Model):
     client = models.ForeignKey(
         "client.Client", on_delete=models.CASCADE, verbose_name="Клиент"
     )
@@ -25,6 +25,7 @@ class Appointment(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата создания записи"
     )
+    payment_status = models.BooleanField(default=False, verbose_name="Оплачено")
 
     class Meta:
         verbose_name = "Запись"
