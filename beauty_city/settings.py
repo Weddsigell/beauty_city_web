@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'master',
     'service',
     'schedule',
+    'appointment',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,7 @@ ROOT_URLCONF = 'beauty_city.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates',],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'appointment/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
