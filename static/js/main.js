@@ -414,5 +414,117 @@ $(document).ready(function() {
 	})
 	
 
+	// === SMS Авторизация ===
+	let currentPhone = '';
+
+	// Отправка телефона
+	$('.authPopup__form').off('submit').on('submit', function(e) {
+		e.preventDefault();
+		
+		const phone = $(this).find('input[name="tel"]').val();
+		currentPhone = phone;
+		
+		fetch('/api/auth/send-code/', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({phone: phone})
+		})
+		.then(r => r.json())
+		.then(data => {
+			if (data.success) {
+				// Показываем номер в модалке подтверждения
+				$('.confirmPopup__text').text('Введите код, полученный по SMS на номер ' + phone);
+				$.arcticmodal('close');
+				$('#confirmModal').arcticmodal();
+			} else {
+				alert(data.error || 'Ошибка');
+			}
+		});
+	});
+
+	// Ввод кода (автоматический переход между полями)
+	$(document).on('input', '.confirmPopup__number input', function() {
+		if (this.value.length === 1) {
+			$(this).next('input').focus();
+		}
+	});
+
+	// Кнопка подтверждения кода
+	$(document).on('click', '.confirmPopup__btn', function(e) {
+		e.preventDefault();
+		console.log('Кнопка подтвердить нажата');
+
+		const inputs = $('.confirmPopup__number input');
+		const code = inputs.map(function() { return this.value; }).get().join('');
+		console.log('Код:', code, 'Телефон:', currentPhone);
+
+		if (code.length === 4) {
+			verifyCode(code);
+		} else {
+			alert('Введите 4-значный код');
+		}
+	});
+
+	// Запросить код повторно
+	$(document).on('click', '.confirmPopup__sms .popup__link', function(e) {
+		e.preventDefault();
+		console.log('Запрос повторного кода для:', currentPhone);
+
+		if (!currentPhone) {
+			alert('Номер телефона не найден');
+			return;
+		}
+
+		fetch('/api/auth/send-code/', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({phone: currentPhone})
+		})
+		.then(r => r.json())
+		.then(data => {
+			if (data.success) {
+				alert('Код отправлен повторно');
+				$('.confirmPopup__number input').val('').first().focus();
+			} else {
+				alert(data.error || 'Ошибка');
+			}
+		});
+	});
+
+	// Изменить номер телефона
+	$(document).on('click', '.confirmPopup__changeNumber .popup__link', function(e) {
+		e.preventDefault();
+		console.log('Изменить номер телефона');
+		$.arcticmodal('close');
+		setTimeout(function() {
+			$('#authModal').arcticmodal();
+		}, 300);
+	});
+
+	function verifyCode(code) {
+		console.log('verifyCode вызван с кодом:', code);
+		fetch('/api/auth/verify/', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({phone: currentPhone, code: code})
+		})
+		.then(r => r.json())
+		.then(data => {
+			console.log('Ответ сервера:', data);
+			if (data.success) {
+				$.arcticmodal('close');
+				alert('Вы успешно авторизованы!');
+				location.reload();
+			} else {
+				alert(data.error || 'Неверный код');
+				$('.confirmPopup__number input').val('').first().focus();
+			}
+		})
+		.catch(err => {
+			console.error('Ошибка:', err);
+			alert('Ошибка сети');
+		});
+	}
+
 
 })
