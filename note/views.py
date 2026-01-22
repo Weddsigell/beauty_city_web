@@ -20,3 +20,16 @@ def render_notes(request):
     }
 
     return render(request, "notes.html", context=context)
+
+
+@login_required
+def render_services(request):
+    context = {
+        "salons": 1,
+        "upcoming_notes": 1,
+        "client": 1,
+        "has_past_notes": 1,
+        "has_upcoming_notes": 1,
+    }
+
+    return render(request, "service.html", context=context)
