@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +11,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="css/jquery.arcticmodal-0.3.css">
-	<link rel="stylesheet" href="css/simple.css">
-	<link rel="stylesheet" href="css/bootstrap-grid.min.css">
-	<link rel="stylesheet" href="css/air-datepicker.css">
-	
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="{% static 'css/jquery.arcticmodal-0.3.css' %}">
+	<link rel="stylesheet" href="{% static 'css/simple.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
+	<link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
 	<section id="mobMenu">
@@ -24,11 +26,11 @@
 					<div class="row">
 						<div class="col-4 col-md-3">
 							<a href="/">
-								<img src="img/Logo.svg" alt="Logo" class="logo header__logo">
+								<img src="{% static 'img/Logo.svg' %}" alt="Logo" class="logo header__logo">
 							</a>
 						</div>
 						<div class="col-3 col-md-2">
-							<img src="img/x.svg" alt="x" class="mobMenuClose">
+							<img src="{% static 'img/x.svg' %}" alt="x" class="mobMenuClose">>
 						</div>
 					</div>
 				</div>
@@ -62,11 +64,11 @@
 			<div class="header">
 				<div class="row">
 					<div class="col-2 col-md-2 mob">
-						<img src="img/hamburger.svg" alt="hamburger" class="header__mobMenu">
+						<img src="{% static 'img/hamburger.svg' %}" alt="hamburger" class="header__mobMenu">
 					</div>
 					<div class="col-5 col-md-3 col-lg-2">
 						<a href="/">
-							<img src="img/Logo.svg" alt="Logo" class="logo header__logo">
+							<img src="{% static 'img/Logo.svg' %}" alt="Logo" class="logo header__logo">
 						</a>
 					</div>
 					<div class="col-md-5 ">
@@ -83,7 +85,7 @@
 						<div class="header__block">
 						<button class="header__block_btn">Перезвоните мне</button>
 						<div class="header__block_auth">
-							<img src="img/acc.svg" alt="account" class="header__account_img">
+							<img src="{% static 'img/acc.svg' %}" alt="account" class="header__account_img">
 							<span class="header__block_auth__intro">Войти</span>
 						</div>
 					</div>
@@ -101,33 +103,37 @@
 				<div class="row">
 					<div class="col-md-6 col-lg-6">
 						<div class="breadCrumbs">
-							<a href="#" class="breadCrumbs__item">На главную</a>
+							<a href="{% url 'home' %}" class="breadCrumbs__item">На главную</a>
 						</div>
 						<div class="service__block">
 							<h1 class="service__title">Запись на услугу</h1>
 						</div>
-						<form action="#" class="serviceFinally__form">
+						<form action="{% url 'add_appointment' %}" method="post" class="serviceFinally__form">
+    						{% csrf_token %}
 							<div class="serviceFinally__form_block">
 								<div class="serviceFinally__form_header fic">
 									<span class="serviceFinally__form_header__number">Запись №32985</span>
 									<div class="serviceFinally__form_header__item fic">
-										<div class="serviceFinally__form_header__service">BeautyCity Пушкинская</div>
-										<div class="serviceFinally__form_header__address">ул. Пушкинская, д. 78А</div>
+										<div class="serviceFinally__form_header__service">{{ salon.name }}</div>
+										<div class="serviceFinally__form_header__address">{{ salon.address }}</div>
 									</div>
 								</div>
 								<div class="serviceFinally__form_content">
 									<div class="serviceFinally__form_content__block fic">
-										<div class="serviceFinally__form_content__title">Дневной макияж</div>
-										<div class="serviceFinally__form_content__price">750 ₽</div>
+										<div class="serviceFinally__form_content__title">{{ service.name }}</div>
+										<div class="serviceFinally__form_content__price">{{ service.price }} ₽</div>
 									</div>
 									<div class="serviceFinally__form_content__block fic">
-										<div class="serviceFinally__form_content__items fic">
-										  	<img src="img/masters/avatar/vizajist1.svg" alt="avatar" class="accordion__block_img">
-										  	<div class="accordion__block_master">Елена Грибнова</div>
+										<div class="serviceFinally__form_content__items fic">{% if master.image %}
+												<img src="{{ master.image.url }}" alt="avatar" class="masters__header_img">
+											{% else %}
+												<img src="#" alt="avatar" class="masters__header_img">
+											{% endif %}
+										  	<div class="accordion__block_master">{{ master.first_name }} {{ master.last_name }}</div>
 									    </div>
 									    <div class="serviceFinally__form_content__item fic">
-											<div class="serviceFinally__form_content__time">16:30</div>
-											<div class="serviceFinally__form_content__date">18 ноября</div>
+											<div class="serviceFinally__form_content__time">{{ time }}</div>
+											<div class="serviceFinally__form_content__date">{{ date|date:"d F Y" }}</div>
 										</div>
 									</div>
 									
@@ -135,7 +141,7 @@
 							</div>
 							<div class="serviceFinally__form_itesm">
 								<div class="contacts__form_block fic">
-									<input type="text" name="fname" class="contacts__form_iunput" placeholder="Введите имя" required="">
+									<input type="text" name="first_name" class="contacts__form_iunput" placeholder="Введите имя" required="">
 									<div class="contacts__form_inputBlock">
 										<input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required="">
 									</div>
@@ -152,7 +158,7 @@
 						</form>	
 					</div>
 					<div class="col-md-12 col-lg-5">
-						<img src="img/bannerImg.svg" alt="bannerImg" class="banner__img">
+						<img src="{% static 'img/bannerImg.svg' %}" alt="bannerImg" class="banner__img">
 					</div>
 				</div>
 			</div>
@@ -164,7 +170,7 @@
 				<div class="footer__block">
 					<div class="row">
 						<div class="col-md-3 col-lg-2">
-							<a href="/"><img src="img/Logo.svg" alt="logo" class="footer__logo"></a>
+							<a href="/"><img src="{% static 'img/Logo.svg' %}" alt="logo" class="footer__logo"></a>
 						</div>
 						<div class="col-md-5 minMobHide">
 							<nav>
@@ -208,14 +214,14 @@
 								<a href="#" class="footer__link">Политика конфиденциальности</a>
 							</div>
 							<div class="col-md-3">
-								<div class="footer__copy">2022. Все права защищены</div>
+								<div class="footer__copy">2026. Все права защищены</div>
 							</div>
 							<div class="col-md-3 col-lg-2">
 								<div class="footer__social fic">
-									<a href=""><img src="img/waGray.svg" alt="wa" class="contacts__social_icon"></a>
-									<a href=""><img src="img/vkGray.svg" alt="vk" class="contacts__social_icon"></a>
-									<a href=""><img src="img/tgGray.svg" alt="tg" class="contacts__social_icon"></a>
-									<a href=""><img src="img/instaGray.svg" alt="insta" class="contacts__social_icon"></a>
+									<a href=""><img src="{% static 'img/waGray.svg' %}" alt="wa" class="contacts__social_icon"></a>
+									<a href=""><img src="{% static 'img/vkGray.svg' %}" alt="vk" class="contacts__social_icon"></a>
+									<a href=""><img src="{% static 'img/tgGray.svg' %}" alt="tg" class="contacts__social_icon"></a>
+									<a href=""><img src="{% static 'img/instaGray.svg' %}" alt="insta" class="contacts__social_icon"></a>
 								</div>
 							</div>
 						</div>
@@ -247,7 +253,7 @@
 	</div>
 	<div style="display: none;">
 		<div class="box-modal confirmPopup popup" id="confirmModal">
-			<div class="box-modal_close arcticmodal-close"><img src="img/x.svg" alt="x"></div>
+			<div class="box-modal_close arcticmodal-close"><img src="{% static 'img/x.svg' %}" alt="x"></div>
 			<div class="popup__title confirmPopup__title">Подтвердите номер</div>
 			<p class="popup__text confirmPopup__text">Введите код, полученный по SMS на номер +7 (928) 164 48 60</p>
 			<div class="confirmPopup__number">
@@ -265,8 +271,8 @@
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="js/air-datepicker.js"></script>
-	<script src="js/jquery.arcticmodal-0.3.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="{% static 'js/air-datepicker.js' %}"></script>
+	<script src="{% static 'js/jquery.arcticmodal-0.3.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
