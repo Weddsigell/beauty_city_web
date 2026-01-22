@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Мои записи{% endblock %}
+{% block title %}
+	Мои записи
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href={% static "css/air-datepicker.css" %}>
+	<link rel="stylesheet" href={% static "css/simple.css" %}>
+	<link rel="stylesheet" href={% static "css/jquery.arcticmodal-0.3.css" %}>
+{% endblock css %}
 
 {% block content %}
 	<section id="notes">
