@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Выбор салона{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="select-salon">
+    <div class="container">
+        <h1>Выберите салон</h1>
+        <div class="salons-list">
+            {% for salon in salons %}
+                <div class="salon-item">
+                    <h3>{{ salon.name }}</h3>
+                    <p>{{ salon.address }}</p>
+                    <a href="{% url 'select_services' salon.id %}" class="btn">Выбрать</a>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'index_page' %}" class="btn">На главную</a>
+    </div>
+</section>
+{% endblock %}
