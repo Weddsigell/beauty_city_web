@@ -3,7 +3,7 @@ from django.db import models
 
 class Note(models.Model):
     client = models.ForeignKey(
-        "client.Client", on_delete=models.CASCADE, verbose_name="Клиент"
+        "user.User", on_delete=models.CASCADE, verbose_name="Клиент"
     )
     master = models.ForeignKey(
         "master.Master",

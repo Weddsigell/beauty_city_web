@@ -14,23 +14,34 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.shortcuts import render
-from django.urls import path, include
+
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.shortcuts import render
+from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # path('', render, kwargs={'template_name': 'index.html'}, name='index_page'),
-    path('admin2/', render, kwargs={'template_name': 'admin.html'}, name='admin_page'),
-    path('notes/', render, kwargs={'template_name': 'notes.html'}, name='notes_page'),
-    path('popup/', render, kwargs={'template_name': 'popup.html'}, name='popup_page'),
-    path('service/', render, kwargs={'template_name': 'service.html'}, name='service_page'),
-    path('service_finally/', render, kwargs={'template_name': 'serviceFinally.html'}, name='service_finally_page'),
-    path('', include('salon.urls')),
-    path('', include('client.urls')),
-    path('', include('note.urls')),
+    path("admin/", admin.site.urls),
+    path("admin2/", render, kwargs={"template_name": "admin.html"}, name="admin_page"),
+    path("notes/", render, kwargs={"template_name": "notes.html"}, name="notes_page"),
+    path("popup/", render, kwargs={"template_name": "popup.html"}, name="popup_page"),
+    path(
+        "service/",
+        render,
+        kwargs={"template_name": "service.html"},
+        name="service_page",
+    ),
+    path(
+        "service_finally/",
+        render,
+        kwargs={"template_name": "serviceFinally.html"},
+        name="service_finally_page",
+    ),
+    path("", include("salon.urls")),
+    path("", include("note.urls")),
+    path("", include("user.urls")),
+    path("", include("core.urls")),
 ]
 
 if settings.DEBUG:
