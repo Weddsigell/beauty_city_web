@@ -14,7 +14,7 @@ class Category(models.Model):
 
 class Procedure(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название", unique=True)
-    image = models.ImageField(verbose_name="Фото", upload_to="procedure_photo/")
+    photo = models.ImageField(verbose_name="Фото", upload_to="procedure_photo/")
     price = models.PositiveSmallIntegerField(verbose_name="Цена")
     master = models.ManyToManyField(
         "master.Master",

@@ -17,12 +17,12 @@ class Master(models.Model):
         verbose_name = "Мастера"
         verbose_name_plural = "Мастера"
 
-    def get_experience(self):
-        delta = timezone.now().date() - self.start_work
+    def get_experience(obj):
+        delta = timezone.now().date() - obj.start_work
         return delta.days // 30
 
     def __str__(self):
-        return f"{self.name} {self.get_experience(self)} месяцев"
+        return f"{self.name} {self.get_experience()} месяцев"
 
 
 class Specialization(models.Model):
