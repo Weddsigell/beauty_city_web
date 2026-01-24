@@ -35,7 +35,5 @@ class Note(models.Model):
 
     def __str__(self):
         return (
-            f"{self.client} - {self.price} - "
-            f"{self.master} - {self.service} - "
-            f"{self.date} - {self.time}"
+            f"{self.client} - {self.procedure}"
         )

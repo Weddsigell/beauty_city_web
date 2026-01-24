@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.utils.html import format_html
 
 from .models import User
 
@@ -25,7 +26,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = (
         "phone",
         "name",
-        "created_at",
+        "photo_preview",
         "is_staff",
         "is_active",
         "is_superuser",
@@ -34,6 +35,17 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("phone__raw", "name")
     list_filter = ("is_staff", "is_superuser", "is_active")
     ordering = ["created_at"]
+    readonly_fields = ("photo_preview",)
+
+    def photo_preview(self, obj):
+        if obj.photo:
+            return format_html(
+                '<img src="{}" width="80" style="border-radius: 8px;" />',
+                obj.photo.url,
+            )
+        return "-"
+
+    photo_preview.short_description = "Фото"
 
     fieldsets = (
         (

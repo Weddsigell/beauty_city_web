@@ -28,6 +28,7 @@ class User(AbstractUser):
     is_staff = models.BooleanField(default=False, verbose_name="Админ")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
     is_superuser = models.BooleanField(default=False, verbose_name="Суперпользователь")
+    photo = models.ImageField(verbose_name="Фото", upload_to="users_photo/", null=True)
 
     name = models.CharField(max_length=255, verbose_name="Имя", default="")
     phone = models.CharField(
