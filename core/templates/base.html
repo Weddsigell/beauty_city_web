@@ -79,22 +79,21 @@
 					</div>
 					<div class="col-2 col-md-2 col-lg-3">
 						<div class="header__block">
-						<a href="tel:+79179023800"><button class="header__block_btn">Перезвоните мне</button></a>
-						<div class="header__block_auth">
-							<img src={% static "img/acc.svg" %} alt="account" class="header__account_img">
-							<span class="header__block_auth__intro">Войти</span>
-						</div>
+							<a href="tel:+79179023800"><button class="header__block_btn">Перезвоните мне</button></a>
+							{% if user.is_authenticated %}
+								{{ user.phone }}
+							{% else %}
+								<div class="header__block_auth">
+									<img src={% static "img/acc.svg" %} alt="account" class="header__account_img">
+									<span class="header__block_auth__intro">Войти</span>
+								</div>
+							{% endif %}
 					</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
-	<form action={% url 'auth' %} method="post">
-			{% csrf_token %}
-			<input type="text" name="phone" value="тест">
-			<button type="submit">Тестовый POST</button>
-	</form>
 	{% if messages %}
 		<div class="messages">
 			{% for message in messages %}

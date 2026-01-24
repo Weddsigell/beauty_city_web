@@ -195,6 +195,9 @@ color: #FFFFFF;
 /*End banner*/
 /*salons*/
 .salons__block {
+	min-height: 300px;          /* подбери под свою вёрстку */
+	display: flex;
+	flex-direction: column;
 	border-radius: 10px;
 	background: #fff;
 	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.02);

@@ -2,37 +2,11 @@ from django.db import models
 from django.utils import timezone
 
 
-class Master(models.Model):
-    name = models.CharField(max_length=100, verbose_name="ФИО")
-    image = models.ImageField(verbose_name="Фото", upload_to="masters_photo/")
-    start_work = models.DateField(verbose_name="Начало стажа работы")
-    salon = models.ForeignKey(
-        "salon.Salon",
-        on_delete=models.CASCADE,
-        verbose_name="Салон",
-        related_name="masters",
-    )
-
-    class Meta:
-        verbose_name = "Мастера"
-        verbose_name_plural = "Мастера"
-
-    def get_experience(obj):
-        delta = timezone.now().date() - obj.start_work
-        return delta.days // 30
-
-    def __str__(self):
-        return f"{self.name} {self.get_experience()} месяцев"
-
-
 class Specialization(models.Model):
     name = models.CharField(
         max_length=40,
         verbose_name="Специализация",
         unique=True,
-    )
-    masters = models.ManyToManyField(
-        Master, related_name="specializations", verbose_name="Мастера"
     )
 
     class Meta:
@@ -41,6 +15,37 @@ class Specialization(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Master(models.Model):
+    name = models.CharField(max_length=100, verbose_name="ФИО")
+    photo = models.ImageField(verbose_name="Фото", upload_to="masters_photo/")
+    start_work = models.DateField(verbose_name="Начало стажа работы")
+    salon = models.ForeignKey(
+        "salon.Salon",
+        on_delete=models.CASCADE,
+        verbose_name="Салон",
+        related_name="masters",
+    )
+    specialization = models.ForeignKey(
+        Specialization,
+        on_delete=models.SET_NULL,
+        verbose_name="Специализация",
+        related_name="masters",
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Мастера"
+        verbose_name_plural = "Мастера"
+
+    @property
+    def experience(self):
+        delta = timezone.now().date() - self.start_work
+        return delta.days // 30
+
+    def __str__(self):
+        return f"{self.name} {self.experience} месяцев"
 
 
 class ScheduleMaster(models.Model):

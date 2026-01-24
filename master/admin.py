@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.utils import timezone
 from django.utils.html import format_html
 
 from .models import Master, ScheduleMaster, Specialization
@@ -10,11 +9,12 @@ class MasterAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "photo_preview",
-        "experience_months",
+        "get_experience",
     )
     list_display_links = ("name",)
     readonly_fields = ("photo_preview",)
 
+    @admin.display(description="Фото")
     def photo_preview(self, obj):
         if obj.photo:
             return format_html(
@@ -23,33 +23,21 @@ class MasterAdmin(admin.ModelAdmin):
             )
         return "-"
 
-    photo_preview.short_description = "Фото"
+    @admin.display(description="Стаж (мес.)")
+    def get_experience(self, obj):
+        return obj.experience
 
-    def experience_months(self, obj):
-        delta = timezone.now().date() - obj.start_work
-        return delta.days // 30
-
-    experience_months.short_description = "Стаж(мес)"
-
-
-class MasterInline(admin.TabularInline):
-    model = Specialization.masters.through
-    extra = 0
-    verbose_name = "Мастер"
-    verbose_name_plural = "Мастера"
 
 
 @admin.register(Specialization)
 class SpecializationAdmin(admin.ModelAdmin):
     list_display = ("name", "masters_count")
     list_display_links = ("name",)
-    inlines = [MasterInline]
     exclude = ("masters",)
 
+    @admin.display(description="Кол-во мастеров")
     def masters_count(self, obj):
         return obj.masters.count()
-
-    masters_count.short_description = "Кол-во мастеров"
 
 
 @admin.register(ScheduleMaster)
