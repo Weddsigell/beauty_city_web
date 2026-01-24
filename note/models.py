@@ -3,7 +3,7 @@ from django.db import models
 
 class Note(models.Model):
     client = models.ForeignKey(
-        "user.User", on_delete=models.CASCADE, verbose_name="Клиент"
+        "user.User", on_delete=models.CASCADE, verbose_name="Клиент", related_name="notes"
     )
     master = models.ForeignKey(
         "master.Master",
@@ -11,13 +11,15 @@ class Note(models.Model):
         null=True,
         blank=True,
         verbose_name="Мастер",
+        related_name="notes",
     )
-    service = models.ForeignKey(
-        "service.Service",
+    procedure = models.ForeignKey(
+        "procedure.Procedure",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name="Услуга",
+        related_name="notes",
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     date = models.DateField(verbose_name="Дата записи")

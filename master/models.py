@@ -1,41 +1,82 @@
 from django.db import models
-from salon.models import Salon 
-from service.models import Service
+from django.utils import timezone
+
 
 class Master(models.Model):
-    CHOICE_SPECIALIZATION = [
-        ('stylist', 'стилист'),
-        ('make-up', 'визажист'),
-        ('nail-master', 'мастер маникюра'),
-        ('barber', 'парикмахер'),
-    ]
-
-    first_name = models.CharField(max_length=100, verbose_name='Имя')
-    last_name = models.CharField(max_length=100, verbose_name='Фамилия')
-    speciality = models.CharField(
-        choices=CHOICE_SPECIALIZATION,
-        max_length=20,
-        verbose_name='Специальность',
-    )
-    image = models.ImageField("Фото мастера", upload_to="masters_photo/", blank=True, null=True)
+    name = models.CharField(max_length=100, verbose_name="ФИО")
+    image = models.ImageField(verbose_name="Фото", upload_to="masters_photo/")
+    start_work = models.DateField(verbose_name="Начало стажа работы")
     salon = models.ForeignKey(
-        Salon,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='masters',
-        verbose_name='Салон',
-    )
-    services = models.ManyToManyField(
-        Service,
-        related_name='masters',
-        verbose_name='Услуги'
+        "salon.Salon",
+        on_delete=models.CASCADE,
+        verbose_name="Салон",
+        related_name="masters",
     )
 
     class Meta:
-        verbose_name = 'Мастера'
-        verbose_name_plural = 'Мастера'
+        verbose_name = "Мастера"
+        verbose_name_plural = "Мастера"
+
+    def get_experience(self):
+        delta = timezone.now().date() - self.start_work
+        return delta.days // 30
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.get_speciality_display()})'
+        return f"{self.name} {self.get_experience(self)} месяцев"
 
+
+class Specialization(models.Model):
+    name = models.CharField(
+        max_length=40,
+        verbose_name="Специализация",
+        unique=True,
+    )
+    masters = models.ManyToManyField(
+        Master, related_name="specializations", verbose_name="Мастера"
+    )
+
+    class Meta:
+        verbose_name = "Специализация"
+        verbose_name_plural = "Специализации"
+
+    def __str__(self):
+        return self.name
+
+
+class ScheduleMaster(models.Model):
+    day = models.PositiveSmallIntegerField(
+        choices=(
+            (0, "Понедельник"),
+            (1, "Вторник"),
+            (2, "Среда"),
+            (3, "Четверг"),
+            (4, "Пятница"),
+            (5, "Суббота"),
+            (6, "Воскресенье"),
+        ),
+        verbose_name="День недели",
+    )
+    start_time = models.TimeField(verbose_name="Начало рабочего времени")
+    end_time = models.TimeField(verbose_name="Окончание рабочего времени")
+    interval = models.PositiveSmallIntegerField(
+        verbose_name="Интервал",
+        default=120,
+    )
+    master = models.ForeignKey(
+        Master,
+        on_delete=models.CASCADE,
+        verbose_name="Мастер",
+        related_name="schedules",
+    )
+    is_active = models.BooleanField(
+        default=True, verbose_name="Активно(выходной или нет)"
+    )
+
+    class Meta:
+        verbose_name = "Расписание мастера"
+        verbose_name_plural = "Расписания мастеров"
+        unique_together = ["master", "day"]
+        ordering = ["day"]
+
+    def __str__(self):
+        return f"{self.master} c {self.start_time} до {self.end_time}"

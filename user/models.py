@@ -37,7 +37,7 @@ class User(AbstractUser):
         blank=False,
         validators=[
             RegexValidator(
-                r"^\+79\d{9}$", message="Номер должен быть в формате +7XXXXXXXXXX"
+                r"^79\d{9}$", message="Номер должен быть в формате +7XXXXXXXXXX"
             ),
         ],
     )

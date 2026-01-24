@@ -7,10 +7,14 @@ from .models import Note
 class NotetAdmin(admin.ModelAdmin):
     list_display = [
         "client",
+        "procedure",
         "master",
-        "service",
         "price",
         "date",
         "time",
         "created_at",
+    ]
+    list_display_links = [
+        "client",
+        "procedure",
     ]

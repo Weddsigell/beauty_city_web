@@ -18,30 +18,18 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.shortcuts import render
 from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("admin2/", render, kwargs={"template_name": "admin.html"}, name="admin_page"),
-    path("notes/", render, kwargs={"template_name": "notes.html"}, name="notes_page"),
-    path("popup/", render, kwargs={"template_name": "popup.html"}, name="popup_page"),
-    path(
-        "service/",
-        render,
-        kwargs={"template_name": "service.html"},
-        name="service_page",
-    ),
-    path(
-        "service_finally/",
-        render,
-        kwargs={"template_name": "serviceFinally.html"},
-        name="service_finally_page",
-    ),
-    path("", include("salon.urls")),
-    path("", include("note.urls")),
     path("", include("user.urls")),
+    path("", include("note.urls")),
     path("", include("core.urls")),
+    # path("", include("consultation.urls")),
+    # path("", include("master.urls")),
+    # path("", include("procedure.urls")),
+    # path("", include("review.urls")),
+    path("", include("salon.urls")),
 ]
 
 if settings.DEBUG:
