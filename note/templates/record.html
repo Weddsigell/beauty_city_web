@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href={% static "css/air-datepicker.css" %}>
+{% endblock css %}
+
+{% block content %}
+  <section id="service">
+    <div class="container">
+      <div class="service">
+        <div class="breadCrumbs">
+          <a href={% url "index_page" %} class="breadCrumbs__item">На главную</a>
+        </div>
+        <div class="service__block">
+          <h1 class="service__title">Запись на услугу</h1>
+          <button class="service__btn btn">Запись по телефону</button>
+        </div>
+        {% block record_content %}
+        {% endblock record_content %}
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <button  class="time__btns_next">Далее</button>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

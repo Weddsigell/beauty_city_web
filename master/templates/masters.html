@@ -1,44 +1,22 @@
-{% extends "base.html" %}
+{% extends "record.html" %}
 {% load static %}
 
 {% block title %}
   Выбор Мастера
 {% endblock %}
 
-{% block css %}
-	<link rel="stylesheet" href={% static "css/air-datepicker.css" %}>
-{% endblock css %}
-
-{% block content %}
-	<section id="service">
-		<div class="container">
-			<div class="service">
-				<div class="breadCrumbs">
-					<a href={% url "index_page" %} class="breadCrumbs__item">На главную</a>
-				</div>
-				<div class="service__block">
-					<h1 class="service__title">Запись на услугу</h1>
-					<button class="service__btn btn">Запись по телефону</button>
-				</div>
-				<form action="#" class="service__form">
-					<div class="service__form_block service__masters">
-            <button class="accordion">(Выберите мастера)</button>
-            <div class="panel">
-							{% for master in masters %}
-								<div class="accordion__block fic">
-									<div class="accordion__block_intro">{{ master.name }}</div>
-									<div class="accordion__block_address">{{ master.experience }}</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>					
-				</form>
+{% block record_content %}
+	<form action="#" class="service__form">
+		<div class="service__form_block service__masters">
+			<button class="accordion">(Выберите мастера)</button>
+			<div class="panel">
+				{% for master in masters %}
+					<div class="accordion__block fic">
+						<div class="accordion__block_intro">{{ master.name }}</div>
+						<div class="accordion__block_address">{{ master.experience }}</div>
+					</div>
+				{% endfor %}
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<button  class="time__btns_next">Далее</button>
-				</div>
-			</div>
-		</div>
-	</section>
-{% endblock content %}
+		</div>					
+	</form>
+{% endblock record_content %}
