@@ -23,13 +23,9 @@ def render_notes(request):
 
 
 @login_required
-def render_services(request):
+def render_procedures(request):
     context = {
-        "salons": 1,
-        "upcoming_notes": 1,
-        "client": 1,
-        "has_past_notes": 1,
-        "has_upcoming_notes": 1,
+        "categories": Procedure.CATEGORIES
     }
 
     return render(request, "service.html", context=context)

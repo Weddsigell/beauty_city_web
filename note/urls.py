@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import render_notes
+from .views import render_notes, render_procedures
 
 urlpatterns = [
     path("notes/", render_notes, name="notes_page"),
