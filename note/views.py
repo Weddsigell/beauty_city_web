@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from master.selectors import get_masters, get_shedule_masters
-from procedure.selectors import get_procedures
+from master.selectors import get_masters
+from procedure.selectors import get_categories
 from salon.selectors import get_salons
 
 from .selectors import past_notes_by_client, upcoming_notes_by_client
@@ -23,9 +23,9 @@ def render_notes(request):
     return render(request, "notes.html", context=context)
 
 
-def render_procedures(request):
+def render_categories(request):
     context = {
-        "procedures": get_procedures(),
+        "categories": get_categories(),
     }
 
     return render(request, "procedures.html", context=context)
@@ -51,3 +51,8 @@ def render_time(request):
     context = {}
 
     return render(request, "time.html", context=context)
+
+
+def render_record_finaly(request):
+    context = {}
+    return render(request, "record_finaly.html", context=context)

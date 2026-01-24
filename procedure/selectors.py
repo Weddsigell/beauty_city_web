@@ -1,5 +1,5 @@
-from .models import Procedure
+from .models import Category
 
 
-def get_procedures():
-    return Procedure.objects.all()
+def get_categories():
+    return Category.objects.all()
