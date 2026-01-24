@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	$('.salonsSlider').slick({
-		arrows: true,
+	  arrows: true,
 	  slidesToShow: 4,
 	  infinite: true,
 	  prevArrow: $('.salons .leftArrow'),

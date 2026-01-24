@@ -50,9 +50,17 @@
 					</div>
 				</div>
 				<div class="title dec">Наши салоны</div>
-				<div class="row">
+				<div class="slider__arrows fic">
+					<div class="slider__arrows_arrow leftArrow">
+						<i class="arrowRight"></i>
+					</div>
+					<div class="slider__arrows_arrow rightArrow">
+						<i class="arrowLleft"></i>
+					</div>
+				</div>
+				<div class="salonsSlider">
 					{% for salon in salons %}
-						<div class="col-6 col-md-4 col-lg-4 col-xl-3">
+						<div>
 							<div class="salons__block">
 								<img src={{ salon.photo.url }} alt="salon" class="salons__block_img">
 								<div class="salons__elems">
@@ -80,9 +88,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="servicesSlider">
 					{% for procedure in procedures %}
-						<div class="col-md-3">
+						<div>
 							<div class="cardBlock services__block">
 								<img src={{ procedure.photo.url }} alt="service" class="services__block_img">
 								<div class="services__elems">
@@ -110,9 +118,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="mastersSlider">
 					{% for master in  masters %}
-						<div class="col-md-3">
+						<div>
 							<div class="cardBlock masters__block">
 								<div class="masters__header fic">
 									<img src={{ master.photo.url }} alt="master" class="masters__header_img">
@@ -154,10 +162,9 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="row">
+				<div class="reviewsSlider">
 					{% for review in reviews %}
-						<div class="col-md-3">
+						<div>
 							<div class="reviews__block">
 								<div class="reviews__name">{{ review.user.name }}</div>
 								<img src="img/rating.svg" alt="rating" class="reviews__header_rating">
