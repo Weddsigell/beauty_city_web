@@ -26,7 +26,7 @@ urlpatterns = [
     path("", include("note.urls")),
     path("", include("core.urls")),
     # path("", include("consultation.urls")),
-    # path("", include("master.urls")),
+    path("", include("master.urls")),
     path("", include("procedure.urls")),
     # path("", include("review.urls")),
     path("", include("salon.urls")),
