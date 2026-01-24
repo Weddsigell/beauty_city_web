@@ -25,7 +25,7 @@
 									довольных клиентов
 								</p>
 							</div>
-							<a href="service.html"><button class="banner__btn">Записаться</button></a>
+							<a href={% url "procedure_page" %}><button class="banner__btn">Записаться</button></a>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-5">
@@ -125,7 +125,7 @@
 								<div class="masters__header fic">
 									<img src={{ master.photo.url }} alt="master" class="masters__header_img">
 									<div class="masters__header_elmes">
-										<div class="masters__header_name">Елизавета Лапина</div>
+										<div class="masters__header_name">{{ master.name }}</div>
 										<img src={% static "img/rating.svg" %} alt="rating" class="masters__header_rating">
 										<div class="masters__header_reviews">{{ master.reviews }}</div>
 									</div>
@@ -206,7 +206,7 @@
 						<div class="contacts__locationBlock">
 							{% for salon in salons  %}
 								<div class="contacts__location fic">
-									<img src={{ salon.photo.url }} alt="location" class="contacts__location_icon">
+									<img src={% static "img/location.svg" %} alt="location" class="contacts__location_icon">
 									<div class="contacts__location_info">
 										<div class="contacts__location_intro">{{ salon.address }}</div>
 										<div class="contacts__location_date">с 10:00 до 20:00  без выходных</div>
