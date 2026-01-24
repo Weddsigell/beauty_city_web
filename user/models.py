@@ -33,8 +33,6 @@ class User(AbstractUser):
     phone = models.CharField(
         unique=True,
         verbose_name="Телефон",
-        null=False,
-        blank=False,
         validators=[
             RegexValidator(
                 r"^79\d{9}$", message="Номер должен быть в формате +7XXXXXXXXXX"

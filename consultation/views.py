@@ -1,3 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.views.decorators.http import require_http_methods
 
-# Create your views here.
+from .services import create_consultation
+
+
+@require_http_methods("POST")
+def consultation(request):
+    phone = request.POST.get("phone", None)
+    name = request.POST.get("name", None)
+    question = request.POST.get("question", None)
+
+    consultation = create_consultation(request, phone, name, question)
+
+    if not consultation:
+        return redirect("index_page")
+
+    return redirect("index_page")
