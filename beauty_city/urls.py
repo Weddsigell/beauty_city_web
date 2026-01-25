@@ -26,6 +26,7 @@ urlpatterns = [
     path("", include("note.urls")),
     path("", include("core.urls")),
     path("", include("consultation.urls")),
+    path("", include("client.urls")),
 ]
 
 if settings.DEBUG:
