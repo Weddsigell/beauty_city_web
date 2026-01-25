@@ -13,7 +13,6 @@ COPY . .
 
 CMD sh -c " \
   uv run manage.py migrate && \
-  (uv run manage.py createsuperuser --noinput || true) && \
   uv run manage.py collectstatic --noinput && \
   uv run gunicorn beauty_city.wsgi:application --workers 3 --bind 0.0.0.0:8000 \
 "
