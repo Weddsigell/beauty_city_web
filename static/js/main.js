@@ -421,7 +421,7 @@ $(document).ready(function() {
 	$('.authPopup__form').off('submit').on('submit', function(e) {
 		e.preventDefault();
 		
-		const phone = $(this).find('input[name="tel"]').val();
+		const phone = $(this).find('input[name="phone"]').val();
 		currentPhone = phone;
 		
 		fetch('/api/auth/send-code/', {
