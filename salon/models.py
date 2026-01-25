@@ -5,6 +5,18 @@ class Salon(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
     photo = models.ImageField(verbose_name="Фото", upload_to="salon_photo/")
     address = models.CharField(max_length=100, verbose_name="Адрес")
+    latitude = models.DecimalField(
+        max_digits=9, decimal_places=6,
+        verbose_name="Широта",
+        blank=True, null=True,
+        help_text="Например: 55.753215"
+    )
+    longitude = models.DecimalField(
+        max_digits=9, decimal_places=6,
+        verbose_name="Долгота",
+        blank=True, null=True,
+        help_text="Например: 37.622504"
+    )
 
     class Meta:
         verbose_name = "Салон"

@@ -234,12 +234,64 @@
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-5 col-xl-6">
-						<div class="contacts__map">
-							<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab7c7d417e660dbf6565501ccc84acd33ec7588fd751ceabc6947e3e9b881e413&amp;lang=ru_RU&amp;scroll=true"></script>
-						</div>
+						<div class="contacts__map" id="map" style="width: 100%; height: 400px;"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
+	<!-- Данные салонов для карты -->
+	{{ salons_json|json_script:"salons-data" }}
+
+	<!-- Яндекс Карты API -->
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+
+	<script>
+		ymaps.ready(initMap);
+
+		function initMap() {
+			// Получаем данные салонов
+			const salonsData = JSON.parse(document.getElementById('salons-data').textContent);
+
+			// Фильтруем салоны с координатами
+			const salonsWithCoords = salonsData.filter(s => s.lat && s.lng);
+
+			// Центр карты (первый салон или Москва по умолчанию)
+			let center = [55.753215, 37.622504];
+			if (salonsWithCoords.length > 0) {
+				center = [salonsWithCoords[0].lat, salonsWithCoords[0].lng];
+			}
+
+			// Создаём карту
+			const map = new ymaps.Map('map', {
+				center: center,
+				zoom: 12,
+				controls: ['zoomControl', 'fullscreenControl']
+			});
+
+			// Добавляем метки салонов
+			salonsWithCoords.forEach(salon => {
+				const placemark = new ymaps.Placemark(
+					[salon.lat, salon.lng],
+					{
+						hintContent: salon.name,
+						balloonContent: `<strong>${salon.name}</strong><br>${salon.address}`
+					},
+					{
+						preset: 'islands#redDotIcon'
+					}
+				);
+				map.geoObjects.add(placemark);
+			});
+
+			// Автомасштабирование под все метки
+			if (salonsWithCoords.length > 1) {
+				map.setBounds(map.geoObjects.getBounds(), {
+					checkZoomRange: true,
+					zoomMargin: 50
+				});
+			}
+		}
+	</script>
 {% endblock %}
