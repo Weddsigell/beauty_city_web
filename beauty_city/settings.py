@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "core",
     "review",
     "consultation",
+    "client",
 ]
 
 MIDDLEWARE = [
