@@ -6,7 +6,7 @@ from .models import Note
 @admin.register(Note)
 class NotetAdmin(admin.ModelAdmin):
     list_display = [
-        "client",
+        "user",
         "procedure",
         "master",
         "price",
@@ -15,6 +15,6 @@ class NotetAdmin(admin.ModelAdmin):
         "created_at",
     ]
     list_display_links = [
-        "client",
+        "user",
         "procedure",
     ]

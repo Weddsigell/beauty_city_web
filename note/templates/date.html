@@ -1,0 +1,45 @@
+{% extends "record.html" %}
+{% block title %}
+  Выбор даты
+{% endblock title %}
+
+
+{% block record_content %}
+<h2>Свободные слоты на ближайшие 2 недели</h2>
+
+  <form method="post" action="{% url 'record_finaly_page' %}">
+    {% csrf_token %}
+
+    {% if free_slots %}
+      {% for date_str, times in free_slots.items %}
+        <div class="date-block" style="margin: 1.5em 0;">
+          <h3 style="margin-bottom: 0.5em;">{{ date_str }}</h3>
+
+          <div class="time-options" style="display: flex; flex-wrap: wrap; gap: 0.8em;">
+            {% for time in times %}
+              <label style="cursor: pointer; padding: 0.6em 1.2em; border: 1px solid #ccc; border-radius: 6px;">
+                <input type="radio" 
+                       name="selected_slot" 
+                       value="{{ date_str }} {{ time }}" 
+                       required 
+                       style="margin-right: 0.4em;">
+                {{ time }}
+              </label>
+            {% endfor %}
+          </div>
+        </div>
+      {% empty %}
+        <p style="color: #888;">Нет свободных слотов в ближайшие дни</p>
+      {% endfor %}
+
+      <div style="margin-top: 2em;">
+        <button type="submit" class="btn btn-primary">Продолжить</button>
+      </div>
+    {% else %}
+      <p style="color: #d32f2f; font-size: 1.1em;">
+        К сожалению, у мастера нет свободных слотов в ближайшие 14 дней.
+      </p>
+      <a href="{% url 'some_previous_page' %}" class="btn">Вернуться назад</a>
+    {% endif %}
+  </form>
+{% endblock record_content %}

@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Note(models.Model):
-    client = models.ForeignKey(
+    user = models.ForeignKey(
         "user.User", on_delete=models.CASCADE, verbose_name="Клиент", related_name="notes"
     )
     master = models.ForeignKey(
@@ -35,5 +35,5 @@ class Note(models.Model):
 
     def __str__(self):
         return (
-            f"{self.client} - {self.procedure}"
+            f"{self.user} - {self.procedure}"
         )

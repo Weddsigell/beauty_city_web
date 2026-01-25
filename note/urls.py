@@ -9,4 +9,5 @@ urlpatterns = [
     path("salons/", views.render_salons, name="salons_page"),
     path("record_finaly/", views.render_record_finaly, name="record_finaly_page"),
     path("create_note/", views.create_note, name="create_note"),
+    path("date/", views.render_date, name="date_page"),
 ]

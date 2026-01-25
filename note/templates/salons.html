@@ -6,17 +6,22 @@
 {% endblock %}
 
 {% block record_content %}
-	<form action="#" class="service__form">
+	<form action={% url "masters_page" %} method="post" class="service__form">
+		{% csrf_token %}
 		<div class="service__form_block service__salons">
-			<button class="accordion">(Выберите салон)</button>
+			<button type="button" class="accordion">(Выберите салон)</button>
 			<div class="panel">
 				{% for salon in salons %}
-					<div class="accordion__block fic">
+					<label class="accordion__block fic">
+						<input type="radio" name="salon_id" value={{ salon.id }}>
 						<div class="accordion__block_intro">{{ salon.name }}</div>
 						<div class="accordion__block_address">{{ salon.address }}</div>
-					</div>
+					</label>
 				{% endfor %}
 			</div>
-		</div>					
+		</div>
+		<div class="col-md-12">
+      <button type="submit" class="time__btns_next">Далее</button>
+    </div>				
 	</form>
 {% endblock record_content %}

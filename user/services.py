@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from .models import User
 
 
-def regiser_or_login(request, phone):
+def register_or_login(request, phone):
     if not phone:
         messages.error(request, "Телефон обязателен!")
         return None
