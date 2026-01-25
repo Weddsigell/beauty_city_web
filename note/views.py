@@ -10,8 +10,8 @@ from .selectors import past_notes_by_client, upcoming_notes_by_client
 
 @login_required
 def render_notes(request):
-    past_notes = past_notes_by_client(client_id=request.user.client.id)
-    upcoming_notes = upcoming_notes_by_client(client_id=request.user.client.id)
+    past_notes = past_notes_by_client(id=request.user.id)
+    upcoming_notes = upcoming_notes_by_client(id=request.user.id)
     context = {
         "past_notes": past_notes,
         "upcoming_notes": upcoming_notes,
