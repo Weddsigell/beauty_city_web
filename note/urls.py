@@ -1,17 +1,12 @@
 from django.urls import path
 
-from .views import (
-    render_categories,
-    render_masters,
-    render_notes,
-    render_record_finaly,
-    render_salons,
-)
+from . import views
 
 urlpatterns = [
-    path("notes/", render_notes, name="notes_page"),
-    path("procedures/", render_categories, name="procedures_page"),
-    path("masters/", render_masters, name="masters_page"),
-    path("salons/", render_salons, name="salons_page"),
-    path("record_finaly/", render_record_finaly, name="record_finaly_page"),
+    path("notes/", views.render_notes, name="notes_page"),
+    path("procedures/", views.render_categories, name="procedures_page"),
+    path("masters/", views.render_masters, name="masters_page"),
+    path("salons/", views.render_salons, name="salons_page"),
+    path("record_finaly/", views.render_record_finaly, name="record_finaly_page"),
+    path("create_note/", views.create_note, name="create_note"),
 ]
